@@ -1,0 +1,51 @@
+#include <stdio.h>
+#include <string.h>
+#include <unistd.h>
+
+int main() {
+    char previousHexCode[42];
+    char currentHexCode[42];
+    char x_axis_prev[5], y_axis_prev[5], z_axis_prev[5];
+    char x_axis_curr[5], y_axis_curr[5], z_axis_curr[5];
+
+    while (1) {
+        // Simulating the continuous arrival of new hex codes
+        // Replace this with the actual method of receiving hex codes
+        printf("Enter the current hex code (54 characters): ");
+        scanf("%s", currentHexCode);
+
+        strncpy(x_axis_curr, currentHexCode + 30, 4);
+        strncpy(y_axis_curr, currentHexCode + 34, 4);
+        strncpy(z_axis_curr, currentHexCode + 38, 4);
+
+        x_axis_curr[4] = '\0';
+        y_axis_curr[4] = '\0';
+        z_axis_curr[4] = '\0';
+
+        if (previousHexCode[0] != '\0') {
+            strncpy(x_axis_prev, previousHexCode + 30, 4);
+            strncpy(y_axis_prev, previousHexCode + 34, 4);
+            strncpy(z_axis_prev, previousHexCode + 38, 4);
+
+            x_axis_prev[4] = '\0';
+            y_axis_prev[4] = '\0';
+            z_axis_prev[4] = '\0';
+
+            printf("Previous X: %s, Y: %s, Z: %s\n", x_axis_prev, y_axis_prev, z_axis_prev);
+            printf("Current X: %s, Y: %s, Z: %s\n", x_axis_curr, y_axis_curr, z_axis_curr);
+
+            if (strcmp(x_axis_prev, x_axis_curr) != 0 || strcmp(y_axis_prev, y_axis_curr) != 0 || strcmp(z_axis_prev, z_axis_curr) != 0) {
+                printf("Moving\n");
+            } else {
+                printf("Stationary\n");
+            }
+        }
+
+        strcpy(previousHexCode, currentHexCode);
+
+        // Add a condition to break the loop if needed
+        sleep(2); // Sleep for 2 second 
+    }
+
+    return 0;
+}
